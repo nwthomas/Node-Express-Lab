@@ -29,4 +29,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const db = await DB.update(req.params.id, req.body);
+    if (db) {
+      res.status(200).json(db);
+    } else {
+      res.status(404).json({ message: "The post could not be found." });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Error updating the post."
+    });
+  }
+});
+
 module.exports = router;
